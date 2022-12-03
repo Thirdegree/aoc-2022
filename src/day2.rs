@@ -76,40 +76,21 @@ pub fn main() {
     println!("here we go");
     let mut tot_score = 0;
     for round in rounds.iter() {
-        tot_score += match round {
-            // Tie is always just the same move
-            Round {
-                opponent_move,
-                desired_outcome: Outcome::Draw,
-            } => opponent_move.score() + 3,
-            // Wins
-            Round {
-                opponent_move: Move::Rock,
-                desired_outcome: Outcome::Win,
-            } => Move::Paper.score() + 6,
-            Round {
-                opponent_move: Move::Paper,
-                desired_outcome: Outcome::Win,
-            } => Move::Scissors.score() + 6,
-            Round {
-                opponent_move: Move::Scissors,
-                desired_outcome: Outcome::Win,
-            } => Move::Rock.score() + 6,
-            // Losses
-            Round {
-                opponent_move: Move::Rock,
-                desired_outcome: Outcome::Lose,
-            } => Move::Scissors.score() + 0,
-            Round {
-                opponent_move: Move::Paper,
-                desired_outcome: Outcome::Lose,
-            } => Move::Rock.score() + 0,
-            Round {
-                opponent_move: Move::Scissors,
-                desired_outcome: Outcome::Lose,
-            } => Move::Paper.score() + 0,
-        };
+        #[cfg_attr(rustfmt, rustfmt_skip)]
+        {
+            tot_score += match round {
+                // Wins
+                Round { opponent_move: Move::Rock, desired_outcome: Outcome::Win, } => Move::Paper.score() + 6,
+                Round { opponent_move: Move::Paper, desired_outcome: Outcome::Win, } => Move::Scissors.score() + 6,
+                Round { opponent_move: Move::Scissors, desired_outcome: Outcome::Win, } => Move::Rock.score() + 6,
+                // Tie is always just the same move
+                Round { opponent_move, desired_outcome: Outcome::Draw, } => opponent_move.score() + 3,
+                // Losses
+                Round { opponent_move: Move::Rock, desired_outcome: Outcome::Lose, } => Move::Scissors.score() + 0,
+                Round { opponent_move: Move::Paper, desired_outcome: Outcome::Lose, } => Move::Rock.score() + 0,
+                Round { opponent_move: Move::Scissors, desired_outcome: Outcome::Lose, } => Move::Paper.score() + 0,
+            };
+        }
     }
     println!("Score: {}", tot_score);
 }
-
