@@ -45,7 +45,7 @@ impl Prio for char {
 }
 
 pub fn main() {
-    let binding = include_str!("day3.txt")
+    let binding = include_str!("data/day3.txt")
         .lines()
         .filter_map(|item| Rucksack::try_from(item).ok())
         .collect::<Vec<_>>();

@@ -69,7 +69,7 @@ impl TryFrom<&str> for Round {
 }
 
 pub fn main() {
-    let rounds: Vec<Round> = include_str!("day2.txt")
+    let rounds: Vec<Round> = include_str!("data/day2.txt")
         .lines()
         .filter_map(|item| Round::try_from(item).ok())
         .collect();
