@@ -10,11 +10,6 @@ use nom::{
     IResult,
 };
 
-#[derive(PartialEq, Eq, Debug)]
-pub enum CratePresent {
-    Present(Crate),
-    Absent,
-}
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub struct Crate {
