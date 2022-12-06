@@ -22,12 +22,12 @@ pub struct Crate {
 }
 
 impl Crate {
-    pub fn parse(input: &str) -> IResult<&str, CratePresent> {
+    pub fn parse(input: &str) -> IResult<&str, Option<Self>> {
         let (input, ident) = alt((delimited(tag("["), alpha1, tag("]")), tag("   ")))(input)?;
         let _crate = if ident == "   " {
-            CratePresent::Absent
+            None
         } else {
-            CratePresent::Present(Crate {
+            Some(Crate {
                 ident: ident.to_string(),
             })
         };
@@ -98,7 +98,7 @@ impl CraneGame {
         }
         for row in crates_by_row {
             for (stack, _crate) in row.iter().enumerate() {
-                if let CratePresent::Present(c) = _crate {
+                if let Some(c) = _crate {
                     stacks[stack].push(c.to_owned());
                 }
             }
@@ -152,7 +152,7 @@ mod test {
     fn test_crate_parse() {
         assert_eq!(
             Crate::parse("[A]").unwrap().1,
-            CratePresent::Present(Crate {
+            Some(Crate {
                 ident: "A".to_string()
             })
         );
@@ -160,7 +160,7 @@ mod test {
 
     #[test]
     fn test_crate_parse_empty() {
-        assert_eq!(Crate::parse("   ").unwrap().1, CratePresent::Absent);
+        assert_eq!(Crate::parse("   ").unwrap().1, None);
     }
 
     #[test]
