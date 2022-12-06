@@ -73,7 +73,6 @@ pub fn main() {
         .lines()
         .filter_map(|item| Round::try_from(item).ok())
         .collect();
-    println!("here we go");
     let mut tot_score = 0;
     for round in rounds.iter() {
         #[cfg_attr(rustfmt, rustfmt_skip)]

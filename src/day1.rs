@@ -27,7 +27,7 @@ pub fn main() {
     let mut elves = binding.iter().collect::<Vec<_>>();
     elves.sort_by_key(|v| v.iter().sum::<u32>());
     println!(
-        "{:?}",
+        "Calories: {:?}",
         elves
             .iter()
             .rev()
