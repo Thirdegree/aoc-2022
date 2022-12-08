@@ -7,17 +7,10 @@ impl Grid {
     fn visible(&self, x: usize, y: usize) -> bool {
         let row = &self.grid[y];
         let col: Vec<_> = self.grid.iter().map(|line| line[x]).collect();
-        if row[..x].iter().all(|&elem| elem < row[x])
+        row[..x].iter().all(|&elem| elem < row[x])
             || row[x + 1..].iter().all(|&elem| elem < row[x])
-        {
-            return true;
-        }
-        if col[..y].iter().all(|&elem| elem < col[y])
+            || col[..y].iter().all(|&elem| elem < col[y])
             || col[y + 1..].iter().all(|&elem| elem < col[y])
-        {
-            return true;
-        }
-        false
     }
     fn count_visible(&self) -> usize {
         (0..self.grid.len())
@@ -34,7 +27,7 @@ impl Grid {
         let consider = self.grid[y][x];
         let mut score = 1;
         // note: do not like
-        // It's important that we do 1..x and x+1..row.len()-1 
+        // It's important that we do 1..x and x+1..row.len()-1
         // I choose not to elaborate why.
         score *= &row[1..x]
             .iter()
