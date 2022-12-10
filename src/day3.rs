@@ -37,8 +37,8 @@ impl Prio for char {
     fn prio(&self) -> u32 {
         let ord = Into::<u32>::into(*self);
         match self {
-            'a'..='z' => ord - 96,
-            'A'..='Z' => ord - 64 + 26,
+            'a'..='z' => ord - 96, // 1-26
+            'A'..='Z' => ord - 64 + 26, // 27-52
             _ => unreachable!(),
         }
     }
