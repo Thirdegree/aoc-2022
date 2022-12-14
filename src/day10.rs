@@ -52,18 +52,19 @@ impl Program {
             } else {
                 print!(".");
             }
-            if waiting == 0 {
-                match cur_instr {
-                    Op::Noop => (),
-                    Op::Addx(i) => x += i,
-                }
-                if let Some(o) = ops.next() {
-                    cur_instr = o;
-                } else {
-                    break;
-                }
-                waiting = cur_instr.cycles();
+            if waiting != 0 {
+                continue;
             }
+            match cur_instr {
+                Op::Noop => (),
+                Op::Addx(i) => x += i,
+            }
+            if let Some(o) = ops.next() {
+                cur_instr = o;
+            } else {
+                break;
+            }
+            waiting = cur_instr.cycles();
         }
     }
 }
