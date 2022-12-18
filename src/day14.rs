@@ -1,4 +1,3 @@
-use std::{thread::sleep, time::Duration};
 
 const X_LEN: usize = 10000;
 
@@ -57,7 +56,7 @@ impl From<&Vec<Vec<Point>>> for Grid {
         Grid {
             grid,
             moving_sand: Some(((X_LEN / 2) + 500, 0).into()),
-            sand_starts_at:((X_LEN / 2) + 500, 0).into(),
+            sand_starts_at: ((X_LEN / 2) + 500, 0).into(),
             floor_y: max_y + 2,
             tot_grains: 0,
         }
@@ -154,12 +153,7 @@ pub fn main() {
         })
         .collect::<Vec<Vec<Point>>>()
         .into();
-    let mut i = 0;
-    while let Some(_) = paths.step() {
-        // paths.print();
-        // println!("----------------");
-        // sleep(Duration::from_millis(50));
-    }
+    while let Some(_) = paths.step() {}
     paths.print();
     println!("{}", paths.tot_grains + 1); // idk why +1 I think there's an off by one error
                                           // somewhere
