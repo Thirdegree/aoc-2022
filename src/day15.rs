@@ -65,13 +65,10 @@ impl Sensor {
     fn distance(&self, point: &Point) -> i32 {
         dist(&self.loc, point)
     }
-    fn mirror_x_right(&self, point: &Point) -> Point {
-        if point.x > self.loc.x {
-            return *point;
-        };
-        let dx = self.loc.x - point.x;
+    fn push_x_right(&self, point: &Point) -> Point {
+        let dx = self.dist_to_closest_beacon - (self.loc.y - point.y).abs();
         Point {
-            x: point.x + 2 * dx,
+            x: self.loc.x + dx,
             y: point.y,
         }
     }
@@ -159,7 +156,7 @@ pub fn main() {
         match sensors
             .values()
             .filter(|s| !s.might_have_beacon(&cur_pos))
-            .map(|s| s.mirror_x_right(&cur_pos))
+            .map(|s| s.push_x_right(&cur_pos))
             .max_by_key(|new_point| new_point.x)
         {
             None => {
@@ -190,7 +187,6 @@ pub fn main() {
                         cur_pos.x += 1;
                     }
                 } else {
-                    // println!("{:?} -> {:?}", cur_pos, new_cur_pos);
                     cur_pos = new_cur_pos
                 }
             }
