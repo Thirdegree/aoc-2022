@@ -9,8 +9,5 @@ edition = "2021"
 nom = "7.1.1"
 path-absolutize = "3.0.14"
 
-[profile.release]
-debug = true
-
-[rust]
-debuginfo-level = 1
+# [profile.release]
+# debug = true
